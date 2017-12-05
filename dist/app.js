@@ -42,7 +42,7 @@ function setupWorldMap () {
         .attr("height", height)
 
     const g = svg.append("g")
-    d3.json("/data/countries.topo.json", function(error, topo) {
+    d3.json("./data/countries.topo.json", function(error, topo) {
         g.append("g")
             .attr("id", "countries")
             .selectAll("path")
@@ -53,7 +53,7 @@ function setupWorldMap () {
             .attr("d", path)
     })
 
-    d3.json("/data/states.topo.json", function(error, topo) {
+    d3.json("./data/states.topo.json", function(error, topo) {
         g.append("g")
             .attr("id", "states")
             .selectAll("path")
