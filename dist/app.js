@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // do render
         scrollPercent = window.pageYOffset / scrollLength
-        fixedDiv.innerText = `${scrollPercent * 100}%`
+        fixedDiv.innerText = (scrollPercent * 100) + '%'
         updateTimelinePosition(timelineDiv, scrollPercent, timelineLength)
         updateRouteHighlights(orderedRoutes, scrollPercent, totalRouteLength)
 
@@ -175,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
     registerListener('scroll', render)
 
     const updateContentDivHeight = () => {
-        contentDiv.style.height = `${window.innerHeight + scrollLength}px`
+        contentDiv.style.height = (window.innerHeight + scrollLength) + 'px'
         const w = mapDiv.clientWidth
         mapSVG.attr("width", w)
         mapSVG.attr("height", w * window.innerHeight / window.innerWidth)
