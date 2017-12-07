@@ -1,8 +1,19 @@
-.enable-js {
+.no-js {
     display: none;
 }
 
 .no-js .enable-js {
+    display: block;
+}
+
+h1, h2, h3 {
+    display: block;
+    position: relative;
+    z-index: 100;
+    text-align: center;
+}
+
+#initial-text {
     display: block;
 }
 
@@ -76,6 +87,6 @@
 
 path.route {
     stroke-width: 2px;
-    stroke: #fd0;
+    stroke: rgb(86, 140, 240);
     fill: none;
 }

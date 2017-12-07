@@ -1,3 +1,21 @@
+const yearEvents = [
+    // each event will be represented by an array with the following order:
+    // [start_day, end_day, start_lat_lon, end_lat_lon, path_color, text, photos_lat_lon, photos_url_list]
+    [-10, -3, [105.33937239105569, 20.221407800283593], [106.37207659406327, 21.668126541782474]],  // hoi-an to hao-long bay
+    [-3, 1, [106.37207659406327, 21.668126541782474], [104.82297366212714, 13.304406884573506]],  // hao-long bay to siam reap
+    [1, 5, [104.82297366212714, 13.304406884573506], [100.69201696782251, 17.288100262290484]],  // siam reap to chang mai
+    [5, 10, [100.69201696782251, 17.288100262290484], [101.20841569675106, 13.304406884573506]],  // chang mai to bangkok
+    [10, 14, [101.20841569675106, 13.304406884573506], [-121.27606663602425, 36.980209634819836]]  // bangkok to san francisco
+    // lake tahoe
+    // pinnacles
+    // portland
+    // austin
+    // sonoma
+    // europe!!!
+    // yosemite
+    // big sur
+]
+
 function buildTimeline (timelineDiv, totalWidth) {
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     timelineDiv.style.width = totalWidth + 'px'
@@ -15,31 +33,34 @@ function buildTimeline (timelineDiv, totalWidth) {
     }
 }
 
+// magic constants... taken from http://www.tnoda.com/flightanimation
+const mapWidth = 938
+const mapHeight = 620
+
 function setupWorldMap () {
-    const width = window.innerWidth
-    const height = window.innerHeight
+    const fullWidth = window.innerWidth
 
     const projection = d3.geo.mercator()
         .rotate([110, 0])
         .scale(150)
-        .translate([width / 2, height / 1.5])
+        .translate([mapWidth / 2, mapHeight / 1.5])
 
     const path = d3.geo.path()
         .projection(projection)
 
     const svg = d3.select("#map").append("svg")
         .attr("preserveAspectRatio", "xMidYMid")
-        .attr("viewBox", "0 0 " + width + " " + height)
-        .attr("width", width)
-        .attr("height", height * height / width)
+        .attr("viewBox", "0 0 " + mapWidth + " " + mapHeight)
+        .attr("width", fullWidth)
+        .attr("height", fullWidth * mapHeight / mapWidth)
         .on('mousemove', function() {
             console.log( projection.invert(d3.mouse(this)) ) // log the mouse x,y position
           })
 
     svg.append("rect")
         .attr("class", "background")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", mapWidth)
+        .attr("height", mapHeight)
 
     const g = svg.append("g")
     d3.json("./data/countries.topo.json", function(error, topo) {
@@ -64,25 +85,24 @@ function setupWorldMap () {
             .attr("d", path)
     })
 
-    const travelPaths = [
-        [[105.33937239105569, 20.221407800283593], [106.37207659406327, 21.668126541782474]],  // hoi-an to hao-long bay
-        [[106.37207659406327, 21.668126541782474], [104.82297366212714, 13.304406884573506]],  // hao-long bay to siam reap
-        [[104.82297366212714, 13.304406884573506], [100.69201696782251, 17.288100262290484]],  // siam reap to chang mai
-        [[100.69201696782251, 17.288100262290484], [101.20841569675106, 13.304406884573506]],  // chang mai to bangkok
-        [[101.20841569675106, 13.304406884573506], [-121.27606663602425, 36.980209634819836]]  // bangkok to san francisco
-    ]
-    const routeIds = []
-    for ([origin, destination] of travelPaths) {
-        const pathId = "travelpath" + routeIds.length
+    let i = 0
+    for (yearEvent of yearEvents) {
+        const [origin, destination] = [yearEvent[2], yearEvent[3]]
+        if (origin === null) {
+            yearEvent.push(null)
+            continue
+        }
+        const pathId = "travelpath" + i
         svg.append("path")
             .datum({type: "LineString", coordinates: [origin, destination]})
             .attr("class", "route")
             .attr("id", pathId)
             .attr("d", path)
-        routeIds.push(pathId)
+        yearEvent.push(document.getElementById(pathId))
+        i += 1
     }
 
-    return [projection, path, svg, g, routeIds]
+    return [projection, path, svg, g]
 }
 
 function zoomMap(g, xyz) {
@@ -114,16 +134,22 @@ function updateTimelinePosition (timelineDiv, scrollPercent, timelineLength) {
     timelineDiv.style.left = ((window.innerWidth / 2) - (scrollPercent * timelineLength)) + 'px'
 }
 
-function updateRouteHighlights (orderedRoutes, scrollPercent, totalRouteLength) {
-    let targetLength = scrollPercent * totalRouteLength
-    for ([route, length] of orderedRoutes) {
-        if (targetLength <= 0) {
+function updateRouteHighlights (scrollPercent) {
+    // convert scroll percentage into a day number
+    const dayNum = scrollPercent * 365
+    for (let yearEvent of yearEvents) {
+        const [startDay, endDay] = [yearEvent[0], yearEvent[1]]
+        const route = yearEvent[yearEvent.length - 1]
+        if (route === null) continue
+        const length = route.getTotalLength()
+        if (dayNum >= endDay) {
             // already got to the target length, so set this offset back to the full length
-            route.style.strokeDashoffset = length
+            route.style.strokeDashoffset = 0
             continue
         }
-        route.style.strokeDashoffset = Math.max((length - targetLength), 0)
-        targetLength -= length
+        const percentCompleted = Math.max((dayNum - startDay) / (endDay - startDay), 0)
+        // starts at (length) and goes to (0)
+        route.style.strokeDashoffset = (1 - percentCompleted) * length
     }
 }
 
@@ -132,6 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.parentNode.classList = []
 
     const scrollLength = 20000
+    const initialTextHeight = 600
     const timelineLength = 5000
     const contentDiv = document.getElementById("content")
     const fixedDiv = document.getElementById("fixed")
@@ -141,16 +168,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // setup UI
     buildTimeline(timelineDiv, timelineLength)
-    const [mapProjection, mapPath, mapSVG, mapG, mapTravelRouteIds] = setupWorldMap()
+    const [mapProjection, mapPath, mapSVG, mapG] = setupWorldMap()
+    document.getElementById("initial-text").style.height = initialTextHeight
 
     // collect the travel routes we want to animate
-    const orderedRoutes = []
-    let totalRouteLength = 0
-    for (let routeId of mapTravelRouteIds) {
-        const route = document.getElementById(routeId)
+    for (let yearEvent of yearEvents) {
+        const route = yearEvent[yearEvent.length - 1]
+        if (route === null) continue
         const length = route.getTotalLength()
-        orderedRoutes.push([route, length])
-        totalRouteLength += length
         // setup the style for the path so it's empty
         route.style.strokeDasharray = length + ' ' + length
         route.style.strokeDashoffset = length
@@ -164,10 +189,10 @@ document.addEventListener("DOMContentLoaded", () => {
         renderInProgress = true
 
         // do render
-        scrollPercent = window.pageYOffset / scrollLength
+        scrollPercent = Math.min((window.pageYOffset - initialTextHeight) / scrollLength, 1)
         fixedDiv.innerText = (scrollPercent * 100) + '%'
         updateTimelinePosition(timelineDiv, scrollPercent, timelineLength)
-        updateRouteHighlights(orderedRoutes, scrollPercent, totalRouteLength)
+        updateRouteHighlights(scrollPercent)
 
         // unlock
         renderInProgress = false
@@ -175,10 +200,16 @@ document.addEventListener("DOMContentLoaded", () => {
     registerListener('scroll', render)
 
     const updateContentDivHeight = () => {
-        contentDiv.style.height = (window.innerHeight + scrollLength) + 'px'
+        // update content div length
+        contentDiv.style.height = (window.innerHeight + initialTextHeight + scrollLength) + 'px'
+        // update map location
         const w = mapDiv.clientWidth
+        const h = mapDiv.clientHeight
+        const svgHeight = w * mapHeight / mapWidth
         mapSVG.attr("width", w)
-        mapSVG.attr("height", w * window.innerHeight / window.innerWidth)
+        mapSVG.attr("height", svgHeight)
+        mapSVG.attr("style", "margin-top: -" + ((svgHeight - h) / 2) + 'px')
+        // re-render
         render()
     }
     registerListener('resize', updateContentDivHeight)
