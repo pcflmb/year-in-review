@@ -142,14 +142,14 @@ function updateRouteHighlights (scrollPercent) {
         const route = yearEvent[yearEvent.length - 1]
         if (route === null) continue
         const length = route.getTotalLength()
-        if (dayNum >= endDay) {
-            // already got to the target length, so set this offset back to the full length
-            route.style.strokeDashoffset = 0
-            continue
-        }
-        const percentCompleted = Math.max((dayNum - startDay) / (endDay - startDay), 0)
+        // if (dayNum >= endDay) {
+        //     // already got to the target length, so set this offset back to the full length
+        //     route.style.strokeDashoffset = 0
+        //     continue
+        // }
+        const percentCompleted = Math.min(Math.max((endDay - dayNum) / (endDay - startDay), -1), 1)  // clamp between [-1,1]
         // starts at (length) and goes to (0)
-        route.style.strokeDashoffset = (1 - percentCompleted) * length
+        route.style.strokeDashoffset = percentCompleted * length
     }
 }
 
