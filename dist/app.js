@@ -1,16 +1,30 @@
 const yearEvents = [
     // each event will be represented by an array with the following order:
-    // [start_day, end_day, start_lat_lon, end_lat_lon, path_color, text, photos_lat_lon, photos_url_list]
-    [-10, -3, [105.33937239105569, 20.221407800283593], [106.37207659406327, 21.668126541782474]],  // hoi-an to hao-long bay
-    [-3, 1, [106.37207659406327, 21.668126541782474], [104.82297366212714, 13.304406884573506]],  // hao-long bay to siam reap
-    [1, 5, [104.82297366212714, 13.304406884573506], [100.69201696782251, 17.288100262290484]],  // siam reap to chang mai
-    [5, 10, [100.69201696782251, 17.288100262290484], [101.20841569675106, 13.304406884573506]],  // chang mai to bangkok
-    [10, 14, [101.20841569675106, 13.304406884573506], [-121.27606663602425, 36.980209634819836]]  // bangkok to san francisco
-    // lake tahoe
+    // [start_day, end_day, start_lat_lon, end_lat_lon, path_color, text, photos_url_list]
+
+    // hoi-an to hao-long bay
+    [-10, -3, [105.33937239105569, 20.221407800283593], [106.37207659406327, 21.668126541782474], null, "hoi-an to hao-long", []],
+    // hao-long bay to siam reap
+    [-3, 1, [106.37207659406327, 21.668126541782474], [104.82297366212714, 13.304406884573506], null, "hao-long bay to siam reap", []],
+    // siam reap to chang mai
+    [1, 5, [104.82297366212714, 13.304406884573506], [100.69201696782251, 17.288100262290484], null, "siam reap to chang mai", []],
+    // chang mai to bangkok
+    [5, 10, [100.69201696782251, 17.288100262290484], [101.20841569675106, 13.304406884573506], null, "chang mai to bangkok", [["https://backpackerslife.info/wp-content/uploads/2017/08/Thailand-travel-tips-1.jpg", "Cool stupa"]]], 
+    // bangkok to san francisco 
+    [10, 14, [101.20841569675106, 13.304406884573506], [-122.2364, 37.4852], null, "bangkok to san francisco", [["https://s3-us-west-1.amazonaws.com/exoticvoyages-wp/wp-content/uploads/2016/11/27094006/137-pillarshouse-chiangmai-thailand.jpg", "Bye-bye Thailand"]]],
+    // rwc -> lake tahoe and back
+    [28, 35, [-122.2364, 37.4852], [-120.1207, 39.2751], null, "headed to lake tahoe", []],
+    [38, 45, [-120.1207, 39.2751], [-122.2364, 37.4852], null, "", []],
     // pinnacles
+    // Lauren in San Diego for Laura Martin
     // portland
+    [140, 150, [-122.2364, 37.4852], [-122.6765, 45.5231], "#e23434", "Lauren goes to portland for her bachelorette party!", []],
+    [153, 160, [-122.6765, 45.5231], [-122.2364, 37.4852], "#e23434", "", []],
     // austin
-    // sonoma
+    [160, 170, [-122.2364, 37.4852], [-97.7431, 30.2672], "#0e3374", "Brendan went down to Austin, TX for his bachelor party!", []],
+    [173, 180, [-97.7431, 30.2672], [-122.2364, 37.4852], "#0e3374", "", []],
+    // Brendan in Japan
+    // sonoma... wedding!
     // europe!!!
     // yosemite
     // big sur
@@ -24,7 +38,7 @@ function buildTimeline (timelineDiv, totalWidth) {
         // create month div element
         const monthDiv = document.createElement("div")
         monthDiv.style.width = divWidth + 'px'
-        monthDiv.classList = ['timeline-month']
+        monthDiv.className = 'timeline-month'
         if (month !== months[0])
             monthDiv.style.marginLeft = -1 + 'px'
         monthDiv.innerText = month
@@ -37,7 +51,7 @@ function buildTimeline (timelineDiv, totalWidth) {
 const mapWidth = 938
 const mapHeight = 620
 
-function setupWorldMap () {
+function setupWorldMap (fixedDiv) {
     const fullWidth = window.innerWidth
 
     const projection = d3.geo.mercator()
@@ -54,7 +68,7 @@ function setupWorldMap () {
         .attr("width", fullWidth)
         .attr("height", fullWidth * mapHeight / mapWidth)
         .on('mousemove', function() {
-            console.log( projection.invert(d3.mouse(this)) ) // log the mouse x,y position
+            // console.log( projection.invert(d3.mouse(this)) ) // log the mouse x,y position
           })
 
     svg.append("rect")
@@ -87,6 +101,7 @@ function setupWorldMap () {
 
     let i = 0
     for (yearEvent of yearEvents) {
+        // create SVG route
         const [origin, destination] = [yearEvent[2], yearEvent[3]]
         if (origin === null) {
             yearEvent.push(null)
@@ -98,7 +113,40 @@ function setupWorldMap () {
             .attr("class", "route")
             .attr("id", pathId)
             .attr("d", path)
-        yearEvent.push(document.getElementById(pathId))
+        const routeDiv = document.getElementById(pathId)
+        const strokeColor = yearEvent[4]
+        if (strokeColor !== null) {
+            routeDiv.style.stroke = strokeColor
+        }
+        const length = routeDiv.getTotalLength()
+        routeDiv.style.strokeDasharray = length + ' ' + length
+        routeDiv.style.strokeDashoffset = length
+
+        // create text span
+        const eventTextDiv = document.createElement("span")
+        eventTextDiv.className = "event-text"
+        eventTextDiv.innerHTML = yearEvent[5]
+        fixedDiv.appendChild(eventTextDiv)
+
+        // create images gallery
+        if (yearEvent[6].length > 0) {
+            const galleriesDiv = document.getElementById("galleries")
+            const galleryId = 'gallery' + i
+            for (let imageData of yearEvent[6]) {
+                const galleryImgA = document.createElement('a')
+                galleryImgA.href = imageData[0]
+                galleryImgA.title = imageData[1]
+                galleryImgA.className = galleryId
+                galleriesDiv.appendChild(galleryImgA)
+            }
+            const galleryListener = halkaBox.run(galleryId)(0)
+            eventTextDiv.addEventListener('click', galleryListener)
+        }
+
+        // store the route div and event text div elements at the end of the event array
+        yearEvent.push({route: routeDiv, text: eventTextDiv})
+
+        // increment counter
         i += 1
     }
 
@@ -139,7 +187,7 @@ function updateRouteHighlights (scrollPercent) {
     const dayNum = scrollPercent * 365
     for (let yearEvent of yearEvents) {
         const [startDay, endDay] = [yearEvent[0], yearEvent[1]]
-        const route = yearEvent[yearEvent.length - 1]
+        const route = yearEvent[yearEvent.length - 1].route
         if (route === null) continue
         const length = route.getTotalLength()
         // if (dayNum >= endDay) {
@@ -153,9 +201,23 @@ function updateRouteHighlights (scrollPercent) {
     }
 }
 
+function updateEventText (scrollPercent) {
+    // convert scroll percentage into a day number
+    const dayNum = scrollPercent * 365
+    for (let yearEvent of yearEvents) {
+        const [startDay, endDay] = [yearEvent[0], yearEvent[1]]
+        const eventTextDiv = yearEvent[yearEvent.length - 1].text
+        if (dayNum >= startDay && dayNum <= endDay) {
+            eventTextDiv.className = 'event-text active'
+        } else {
+            eventTextDiv.className = 'event-text'
+        }
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     // Remove "no-js" class from <html> tag
-    document.body.parentNode.classList = []
+    document.body.parentNode.className = ''
 
     const scrollLength = 20000
     const initialTextHeight = 600
@@ -168,18 +230,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // setup UI
     buildTimeline(timelineDiv, timelineLength)
-    const [mapProjection, mapPath, mapSVG, mapG] = setupWorldMap()
+    const [mapProjection, mapPath, mapSVG, mapG] = setupWorldMap(fixedDiv)
     document.getElementById("initial-text").style.height = initialTextHeight
-
-    // collect the travel routes we want to animate
-    for (let yearEvent of yearEvents) {
-        const route = yearEvent[yearEvent.length - 1]
-        if (route === null) continue
-        const length = route.getTotalLength()
-        // setup the style for the path so it's empty
-        route.style.strokeDasharray = length + ' ' + length
-        route.style.strokeDashoffset = length
-    }
 
     let renderInProgress = false
     const render = () => {
@@ -190,9 +242,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // do render
         scrollPercent = Math.min((window.pageYOffset - initialTextHeight) / scrollLength, 1)
-        fixedDiv.innerText = (scrollPercent * 100) + '%'
+        // fixedDiv.innerText = (scrollPercent * 100) + '%'
         updateTimelinePosition(timelineDiv, scrollPercent, timelineLength)
         updateRouteHighlights(scrollPercent)
+        updateEventText(scrollPercent)
 
         // unlock
         renderInProgress = false

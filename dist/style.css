@@ -17,11 +17,11 @@ h1, h2, h3 {
     display: block;
 }
 
-#fixed {
+/* #fixed {
     position: fixed;
     top: 50%;
     left: 50%;
-}
+} */
 
 #timeline {
     display: block;
@@ -89,4 +89,21 @@ path.route {
     stroke-width: 2px;
     stroke: rgb(86, 140, 240);
     fill: none;
+}
+
+.event-text {
+    position: fixed;
+    z-index: 100;
+    bottom: -100px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    transition: bottom 0.5s, opacity 0.75s;
+    font-size: 1.5em;
+}
+
+.event-text.active {
+    bottom: 15%;
+    opacity: 1;
 }
