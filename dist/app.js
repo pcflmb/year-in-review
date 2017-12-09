@@ -2,10 +2,12 @@ const yearEvents = [
     // each event will be represented by an array with the following order:
     // [start_day, end_day, start_lat_lon, end_lat_lon, path_color, text, photos_url_list]
 
+    // start in hoi-an
+    [-100, -100, [105.33937239105569, 20.221407800283593], [105.33937239105569, 20.221407800283593], null, "start in hoi-an", []],
     // hoi-an to hao-long bay
-    [-10, -3, [105.33937239105569, 20.221407800283593], [106.37207659406327, 21.668126541782474], null, "hoi-an to hao-long", []],
+    [-10, -4, [105.33937239105569, 20.221407800283593], [106.37207659406327, 21.668126541782474], null, "hoi-an to hao-long", []],
     // hao-long bay to siam reap
-    [-3, 1, [106.37207659406327, 21.668126541782474], [104.82297366212714, 13.304406884573506], null, "hao-long bay to siam reap", []],
+    [-4, 1, [106.37207659406327, 21.668126541782474], [104.82297366212714, 13.304406884573506], null, "hao-long bay to siam reap", []],
     // siam reap to chang mai
     [1, 5, [104.82297366212714, 13.304406884573506], [100.69201696782251, 17.288100262290484], null, "siam reap to chang mai", []],
     // chang mai to bangkok
@@ -128,6 +130,17 @@ function setupWorldMap (fixedDiv) {
         eventTextDiv.innerHTML = yearEvent[5]
         fixedDiv.appendChild(eventTextDiv)
 
+        // create location marker
+        // add circles to svg
+        const destinationId = "destination" + i
+        svg.append("circle")
+            .attr("cx", projection(destination)[0] )
+            .attr("cy", projection(destination)[1] )
+            // .attr("r", "5px")
+            .attr("class", "destination-marker")
+            .attr("id", destinationId)
+        const destinationMarkerCircle = document.getElementById(destinationId)
+
         // create images gallery
         if (yearEvent[6].length > 0) {
             const galleriesDiv = document.getElementById("galleries")
@@ -141,10 +154,11 @@ function setupWorldMap (fixedDiv) {
             }
             const galleryListener = halkaBox.run(galleryId)(0)
             eventTextDiv.addEventListener('click', galleryListener)
+            destinationMarkerCircle.addEventListener('click', galleryListener)
         }
 
         // store the route div and event text div elements at the end of the event array
-        yearEvent.push({route: routeDiv, text: eventTextDiv})
+        yearEvent.push({route: routeDiv, text: eventTextDiv, marker: destinationMarkerCircle})
 
         // increment counter
         i += 1
@@ -215,6 +229,25 @@ function updateEventText (scrollPercent) {
     }
 }
 
+function updateDestinationMarker (scrollPercent) {
+    // convert scroll percentage into a day number
+    const dayNum = scrollPercent * 365
+    let lastActive = null
+    for (let yearEvent of yearEvents) {
+        const [startDay, endDay] = [yearEvent[0], yearEvent[1]]
+        const destinationMarkerCircle = yearEvent[yearEvent.length - 1].marker
+        if (dayNum >= endDay) {
+            destinationMarkerCircle.classList = ['destination-marker active']
+            lastActive = destinationMarkerCircle
+        } else {
+            destinationMarkerCircle.classList = ['destination-marker']
+        }
+    }
+    if (lastActive !== null) {
+        lastActive.classList = ['destination-marker active most-recent']
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     // Remove "no-js" class from <html> tag
     document.body.parentNode.className = ''
@@ -246,6 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateTimelinePosition(timelineDiv, scrollPercent, timelineLength)
         updateRouteHighlights(scrollPercent)
         updateEventText(scrollPercent)
+        updateDestinationMarker(scrollPercent)
 
         // unlock
         renderInProgress = false

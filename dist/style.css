@@ -107,3 +107,28 @@ path.route {
     bottom: 15%;
     opacity: 1;
 }
+
+.destination-marker {
+    r: 2px;
+    fill: rgb(113, 159, 238);
+    cursor: pointer;
+    display: none;
+    transition: fill 0.5s;
+}
+
+.destination-marker.active {
+    display: block;
+}
+
+@keyframes pulse {
+    0% { r: 2.5px; }
+    25% { r: 3px; }
+    50% { r: 3.5px; }
+    75% { r: 3px; }
+    100% { r: 2.5px; }
+}
+
+.destination-marker.most-recent {
+    animation: pulse 1.5s ease-in infinite;
+    fill: rgb(86, 140, 240);
+}
