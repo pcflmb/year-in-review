@@ -120,6 +120,8 @@ const yearEvents = [
     [330, 335, [-121.412190, 36.013758], [-122.2364, 37.4852], null, "We did a weekend camping trip in Big Sur and brought the dogs along!", []],
 ]
 
+const DAYS_IN_YEAR = 365
+
 function buildTimeline (timelineDiv, totalWidth) {
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     timelineDiv.style.width = totalWidth + 'px'
@@ -134,6 +136,23 @@ function buildTimeline (timelineDiv, totalWidth) {
         monthDiv.innerText = month
 
         timelineDiv.appendChild(monthDiv)
+    }
+    // add events to the timeline as well
+    for (let yearEvent of yearEvents) {
+        const [startDay, endDay, origin, destination, color] = [yearEvent[0], yearEvent[1], yearEvent[2], yearEvent[3], yearEvent[4]]
+        if (endDay <= 0 || origin == destination) {
+            // don't show events prior to the start of the year or events that start and end in the same location
+            continue
+        }
+        const eventTimelineDiv = document.createElement("div")
+        eventTimelineDiv.className = 'timeline-event'
+        eventTimelineDiv.style.width = ((endDay - Math.max(startDay, 0)) / DAYS_IN_YEAR * totalWidth) + 'px'
+        if (color !== null) {
+            // eventTimelineDiv.style.borderColor = color
+            eventTimelineDiv.style.backgroundColor = color + '33'  // set alpha channel to 0.2
+        }
+        eventTimelineDiv.style.left = (Math.max(startDay, 0) / DAYS_IN_YEAR * totalWidth) + 'px'
+        timelineDiv.appendChild(eventTimelineDiv)
     }
 }
 
@@ -283,7 +302,7 @@ function updateTimelinePosition (timelineDiv, scrollPercent, timelineLength) {
 
 function updateRouteHighlights (scrollPercent) {
     // convert scroll percentage into a day number
-    const dayNum = scrollPercent * 365
+    const dayNum = scrollPercent * DAYS_IN_YEAR
     for (let yearEvent of yearEvents) {
         const [startDay, endDay] = [yearEvent[0], yearEvent[1]]
         const route = yearEvent[yearEvent.length - 1].route
@@ -302,7 +321,7 @@ function updateRouteHighlights (scrollPercent) {
 
 function updateEventText (scrollPercent) {
     // convert scroll percentage into a day number
-    const dayNum = scrollPercent * 365
+    const dayNum = scrollPercent * DAYS_IN_YEAR
     let i = 0
     for (let yearEvent of yearEvents) {
         let [startDay, endDay] = [yearEvent[0], yearEvent[1]]
@@ -331,7 +350,7 @@ function updateEventText (scrollPercent) {
 
 function updateDestinationMarker (scrollPercent) {
     // convert scroll percentage into a day number
-    const dayNum = scrollPercent * 365
+    const dayNum = scrollPercent * DAYS_IN_YEAR
     let lastActive = null
     let lastTooltip = null
     for (let yearEvent of yearEvents) {

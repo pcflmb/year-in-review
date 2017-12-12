@@ -75,6 +75,20 @@ h1 {
     font-weight: bold;
 }
 
+.timeline-event {
+    position: absolute;
+    display: block;
+    bottom: 0;
+    height: 25px;
+    background-color: rgba(86, 140, 240, 0.2);
+    /* Border bottom & right 
+    height: 2px;
+    border-width: 0 1px 1px 0;
+    border-color: rgb(86, 140, 240);
+    border-style: solid;
+    */
+}
+
 /* ------------- MAP -------------- */
 #map {
     position: fixed;
