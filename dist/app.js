@@ -3,31 +3,69 @@ const yearEvents = [
     // [start_day, end_day, start_lat_lon, end_lat_lon, path_color, text, photos_url_list]
 
     // start in hoi-an
-    [-100, -100, [105.33937239105569, 20.221407800283593], [105.33937239105569, 20.221407800283593], null, "start in hoi-an", []],
+    [-100, -100, [105.33937239105569, 20.221407800283593], [105.33937239105569, 20.221407800283593], null, "",
+    [['/img/BNL_2353.JPG', ''], ['/img/BNL_2411.JPG', ''], ['/img/BNL_2426.JPG', '']]],
     // hoi-an to hao-long bay
-    [-10, -4, [105.33937239105569, 20.221407800283593], [106.37207659406327, 21.668126541782474], null, "hoi-an to hao-long", []],
+    [-10, -4, [105.33937239105569, 20.221407800283593], [106.37207659406327, 21.668126541782474], null, "hoi-an to hao-long",
+    [['/img/BNL_2518.JPG', ''], ['/img/BNL_2504.JPG', ''], ['/img/BNL_2506.JPG', ''], ['/img/BNL_2524.JPG', ''], ['/img/BNL_2534.JPG', '']]],
     // hao-long bay to siam reap
-    [-4, 1, [106.37207659406327, 21.668126541782474], [104.82297366212714, 13.304406884573506], null, "hao-long bay to siam reap", []],
+    [-4, 1, [106.37207659406327, 21.668126541782474], [104.82297366212714, 13.304406884573506], null, "hao-long bay to siam reap",
+    [['/img/BNL_0003.JPG', ''], ['/img/BNL_0024.JPG', ''], ['/img/BNL_0086.JPG', ''], ['/img/BNL_0109.JPG', ''], ['/img/BNL_0123.JPG', ''], ['/img/BNL_0129.JPG', ''], ['/img/BNL_0160.JPG', '']]],
     // siam reap to chang mai
-    [1, 5, [104.82297366212714, 13.304406884573506], [100.69201696782251, 17.288100262290484], null, "siam reap to chang mai", []],
+    [1, 5, [104.82297366212714, 13.304406884573506], [100.69201696782251, 17.288100262290484], null, "siam reap to chang mai",
+    [['/img/BNL_0206.JPG', ''], ['/img/BNL_0230.JPG', ''], ['/img/DSC_0950.JPG', ''], ['/img/DSC_0953.JPG', ''], ['/img/DSC_0980.JPG', ''], ['/img/DSC_0982.JPG', ''],
+    ['/img/DSC_0985.JPG', ''], ['/img/DSC_1029.JPG', ''], ['/img/DSC_1030.JPG', ''], ['/img/DSC_1056.JPG', ''], ['/img/DSC_1076.JPG', ''], ['/img/DSC_1258.JPG', ''],
+    ['/img/DSC_1376.JPG', ''], ['/img/DSC_1389.JPG', ''], ['/img/DSC_1446.JPG', ''], ['/img/DSC_1502.JPG', ''], ['/img/DSC_1594.JPG', '']]],
     // chang mai to bangkok
-    [5, 10, [100.69201696782251, 17.288100262290484], [101.20841569675106, 13.304406884573506], null, "chang mai to bangkok", [["https://backpackerslife.info/wp-content/uploads/2017/08/Thailand-travel-tips-1.jpg", "Cool stupa"]]], 
+    [5, 10, [100.69201696782251, 17.288100262290484], [101.20841569675106, 13.304406884573506], null, "chang mai to bangkok",
+    [['/img/BNL_0248.JPG', ''], ['/img/BNL_0275.JPG', ''], ['/img/BNL_0292.JPG', 'Sneaky photo of the Jade Buddah'], ['/img/BNL_0303.JPG', '']]],
     // bangkok to san francisco 
-    [10, 14, [101.20841569675106, 13.304406884573506], [-122.2364, 37.4852], null, "bangkok to san francisco", [["https://s3-us-west-1.amazonaws.com/exoticvoyages-wp/wp-content/uploads/2016/11/27094006/137-pillarshouse-chiangmai-thailand.jpg", "Bye-bye Thailand"]]],
+    [10, 14, [101.20841569675106, 13.304406884573506], [-122.2364, 37.4852], null, "bangkok to san francisco",
+    []],
     // rwc -> lake tahoe and back
-    [28, 35, [-122.2364, 37.4852], [-120.1207, 39.2751], null, "headed to lake tahoe", []],
+    [28, 35, [-122.2364, 37.4852], [-120.1207, 39.2751], null, "headed to lake tahoe",
+    []],
     [38, 45, [-120.1207, 39.2751], [-122.2364, 37.4852], null, "", []],
     // pinnacles
     // Lauren in San Diego for Laura Martin
+    [130, 136, [-122.2364, 37.4852], [-117.1611, 32.7157], "#e23434", "Lauren heads to San Diego for Laura Martin's Bachelorette", []],
+    [138, 140, [-117.1611, 32.7157], [-122.2364, 37.4852], "#e23434", "", []],
+    // bridal shower
+    [140, 142, [-122.2364, 37.4852], [-122.4286, 37.4636], "#e23434", "", []],
+    [142, 144, [-122.4286, 37.4636], [-122.2364, 37.4852], "#e23434", "", []],
     // portland
-    [140, 150, [-122.2364, 37.4852], [-122.6765, 45.5231], "#e23434", "Lauren goes to portland for her bachelorette party!", []],
-    [153, 160, [-122.6765, 45.5231], [-122.2364, 37.4852], "#e23434", "", []],
+    [144, 152, [-122.2364, 37.4852], [-122.6765, 45.5231], "#e23434", "Lauren goes to portland for her bachelorette party!", []],
+    [152, 154, [-122.6765, 45.5231], [-122.2364, 37.4852], "#e23434", "", []],
     // austin
-    [160, 170, [-122.2364, 37.4852], [-97.7431, 30.2672], "#0e3374", "Brendan went down to Austin, TX for his bachelor party!", []],
-    [173, 180, [-97.7431, 30.2672], [-122.2364, 37.4852], "#0e3374", "", []],
+    [154, 162, [-122.2364, 37.4852], [-97.7431, 30.2672], "#0e3374", "Brendan went down to Austin, TX for his bachelor party", []],
+    [162, 164, [-97.7431, 30.2672], [-122.2364, 37.4852], "#0e3374", "", []],
     // Brendan in Japan
+    [170, 175, [-122.2364, 37.4852], [135.5022, 34.6937], "#0e3374", "Brendan went to Japan for a business trip.", []],
+    [175, 177, [135.5022, 34.6937], [139.6917, 35.6895], "#0e3374", "Down to Tokyo on the bullet train!", []],
+    [177, 180, [139.6917, 35.6895], [135.5022, 34.6937], "#0e3374", "", []],
+    [180, 183, [135.5022, 34.6937], [-122.2364, 37.4852], "#0e3374", "", []],
+    // LM Wedding in Ohio
+    [195, 202, [-122.2364, 37.4852], [-81.6944, 41.4993], null, "Going to Ohio!", []],
+    [202, 203, [-81.6944, 41.4993], [-122.2364, 37.4852], null, "", []],
     // sonoma... wedding!
-    // europe!!!
+    [195, 202, [-122.2364, 37.4852], [-122.4580, 38.2919], null, "Headed to Sonoma for our Wedding!", []],
+    [202, 203, [-122.4580, 38.2919], [-122.2364, 37.4852], null, "", []],
+    // Ireland
+    [203, 205, [-122.2364, 37.4852], [-6.2603, 53.3498], null, "Off for our Honeymoon... First stop is Ireland 🇮🇪", []],
+    [205, 207, [-6.2603, 53.3498], [-9.4265, 52.9719], null, "", []],
+    [207, 209, [-9.4265, 52.9719], [-9.5044, 52.0599], null, "", []],
+    [209, 211, [-9.5044, 52.0599], [-6.2603, 53.3498], null, "", []],
+    // Germany / Switzerland
+    [211, 211.5, [-6.2603, 53.3498], [8.6821, 50.1109], null, "How headed to Germany 🇩🇪", []],
+    [211.5, 212, [8.6821, 50.1109], [7.7273, 50.1065], null, "", []],
+    [212, 213, [7.7273, 50.1065], [8.2285, 48.7656], null, "Go to Baden-Baden", []],
+    [216, 216.5, [8.2285, 48.7656], [9.6789, 47.5798], null, "Drive to Lake Constance", []],
+    [216.5, 217, [9.6789, 47.5798], [9.3767, 47.4245], null, "Bye-bye Germany. Hello Switzerland 🇨🇭", []],
+    [219, 220, [9.3767, 47.4245], [11.5820, 48.1351], null, "", []],
+    // Sicily
+    [220, 221, [11.5820, 48.1351], [15.2853, 37.8516], null, "We spent the final week of our honeymoon in Toarmina 🇮🇹", []],
+    [227, 228, [15.2853, 37.8516], [-6.2603, 53.3498], null, "Quick pit stop back in Dublin", []],
+    [228, 230, [-6.2603, 53.3498], [-122.2364, 37.4852], null, "Headed back home 🇺🇸", []],
     // yosemite
     // big sur
 ]
@@ -146,9 +184,18 @@ function setupWorldMap (fixedDiv) {
             const galleriesDiv = document.getElementById("galleries")
             const galleryId = 'gallery' + i
             for (let imageData of yearEvent[6]) {
+                let imageURL = imageData
+                let imageTitle = null
+                if (Array.isArray(imageData)) {
+                    imageURL = imageData[0]
+                    imageTitle = imageData[1]
+                }
                 const galleryImgA = document.createElement('a')
-                galleryImgA.href = imageData[0]
-                galleryImgA.title = imageData[1]
+                imageURL = imageURL.startsWith('http') ? imageURL : (window.location.protocol + '//' + window.location.host + imageURL)
+                galleryImgA.href = imageURL
+                if (imageTitle !== null) {
+                    galleryImgA.title = imageTitle
+                }
                 galleryImgA.className = galleryId
                 galleriesDiv.appendChild(galleryImgA)
             }
