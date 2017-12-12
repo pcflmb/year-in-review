@@ -140,10 +140,11 @@ function buildTimeline (timelineDiv, totalWidth) {
     // add events to the timeline as well
     for (let yearEvent of yearEvents) {
         const [startDay, endDay, origin, destination, color] = [yearEvent[0], yearEvent[1], yearEvent[2], yearEvent[3], yearEvent[4]]
-        if (endDay <= 0 || origin == destination) {
+        if (endDay <= 0 || (origin[0] === destination[0] && origin[1] === destination[1])) {
             // don't show events prior to the start of the year or events that start and end in the same location
             continue
         }
+        console.log(origin + '  ' + destination)
         const eventTimelineDiv = document.createElement("div")
         eventTimelineDiv.className = 'timeline-event'
         eventTimelineDiv.style.width = ((endDay - Math.max(startDay, 0)) / DAYS_IN_YEAR * totalWidth) + 'px'
