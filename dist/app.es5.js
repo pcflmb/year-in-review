@@ -394,7 +394,7 @@ function updateDestinationMarker (scrollPercent) {
         }
     }
     if (lastActive !== null) {
-        setCircleClass(destinationMarkerCircle, 'destination-marker active most-recent')
+        setCircleClass(lastActive, 'destination-marker active most-recent')
         if (lastTooltip !== null) {
             // set tooltip position
             var markerLocation = lastActive.getBoundingClientRect()
