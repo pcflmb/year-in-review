@@ -252,6 +252,7 @@ function setupWorldMap (fixedDiv) {
         svg.append("circle")
             .attr("cx", projection(destination)[0] )
             .attr("cy", projection(destination)[1] )
+            .attr("r", "3")
             .attr("class", "destination-marker")
             .attr("id", destinationId)
         var destinationMarkerCircle = document.getElementById(destinationId)
@@ -357,6 +358,14 @@ function updateEventText (scrollPercent) {
     }
 }
 
+function setCircleClass (destinationMarkerCircle, classes) {
+    if ("baseVal" in destinationMarkerCircle.className) {
+        destinationMarkerCircle.className["baseVal"] = classes
+    } else {
+        destinationMarkerCircle.classList = [classes]
+    }
+}
+
 function updateDestinationMarker (scrollPercent) {
     // convert scroll percentage into a day number
     var dayNum = scrollPercent * DAYS_IN_YEAR
@@ -369,7 +378,7 @@ function updateDestinationMarker (scrollPercent) {
         var destinationMarkerCircle = yearEvent[yearEvent.length - 1].marker
         var tooltipDiv = yearEvent[yearEvent.length - 1].tooltip
         if (dayNum >= endDay) {
-            destinationMarkerCircle.classList = ['destination-marker active']
+            setCircleClass(destinationMarkerCircle, 'destination-marker active')
             lastActive = destinationMarkerCircle
             if (lastTooltip !== null) {
                 // hide old tooltips
@@ -377,14 +386,14 @@ function updateDestinationMarker (scrollPercent) {
             }
             lastTooltip = tooltipDiv
         } else {
-            destinationMarkerCircle.classList = ['destination-marker']
+            setCircleClass(destinationMarkerCircle, 'destination-marker')
             if (tooltipDiv !== null) {
                 tooltipDiv.style.display = 'none'
             }
         }
     }
     if (lastActive !== null) {
-        lastActive.classList = ['destination-marker active most-recent']
+        setCircleClass(destinationMarkerCircle, 'destination-marker active most-recent')
         if (lastTooltip !== null) {
             // set tooltip position
             var markerLocation = lastActive.getBoundingClientRect()
