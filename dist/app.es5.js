@@ -1,3 +1,10 @@
+// POLYFILLS
+if (!String.prototype.startsWith) {
+    String.prototype.startsWith = function(searchString, position){
+      return this.substr(position || 0, searchString.length) === searchString;
+  };
+}
+
 var yearEvents = [
     // each event will be represented by an array with the following order:
     // [start_day, end_day, start_lat_lon, end_lat_lon, path_color, text, photos_url_list]
