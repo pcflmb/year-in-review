@@ -359,7 +359,8 @@ function updateEventText (scrollPercent) {
 }
 
 function setCircleClass (destinationMarkerCircle, classes) {
-    if ("baseVal" in destinationMarkerCircle.className) {
+    var userAgent = navigator.userAgent
+    if (userAgent.indexOf('Edge') >= 0 || userAgent.indexOf('MSIE') >= 0 || userAgent.indexOf('rv:') >= 0) {
         destinationMarkerCircle.className["baseVal"] = classes
     } else {
         destinationMarkerCircle.classList = [classes]
