@@ -8,24 +8,25 @@ if (!String.prototype.startsWith) {
 var yearEvents = [
     // each event will be represented by an array with the following order:
     // [start_day, end_day, start_lat_lon, end_lat_lon, path_color, text, photos_url_list]
-
+    
     // start in hoi-an
     [-100, -100, [105.3394, 20.2214], [105.3394, 20.2214], null, "",
-    [['/img/BNL_2353.JPG', ''], ['/img/BNL_2411.JPG', ''], ['/img/BNL_2426.JPG', '']]],
+    ['/img/DSC_0018.JPG', '/img/DSC_0042.JPG', '/img/DSC_0045.JPG', '/img/BNL_2353.JPG', '/img/BNL_2411.JPG']],
     // hoi-an to hao-long bay
     [-10, -4, [105.3394, 20.2214], [106.3721, 21.6681], null, "Just before the new year we were in Vietnam",
-    [['/img/BNL_2518.JPG', ''], ['/img/BNL_2504.JPG', ''], ['/img/BNL_2506.JPG', ''], ['/img/BNL_2524.JPG', ''], ['/img/BNL_2534.JPG', '']]],
+    ['/img/DSC_0190.JPG', ['/img/BNL_2518.JPG', ''], ['/img/BNL_2504.JPG', ''], ['/img/BNL_2506.JPG', ''], ['/img/BNL_2524.JPG', ''], ['/img/BNL_2534.JPG', '']]],
     // hao-long bay to siam reap
     [-4, 1, [106.3721, 21.6681], [104.8230, 13.3044], null, "Then we flew to Cambodia to ring in 2017!",
-    [['/img/BNL_0003.JPG', ''], ['/img/BNL_0024.JPG', ''], ['/img/BNL_0086.JPG', ''], ['/img/BNL_0109.JPG', ''], ['/img/BNL_0123.JPG', ''], ['/img/BNL_0129.JPG', ''], ['/img/BNL_0160.JPG', '']]],
+    ['/img/DSC_0285.JPG', '/img/DSC_0314.JPG', ['/img/BNL_0003.JPG', ''], ['/img/BNL_0024.JPG', ''], ['/img/BNL_0086.JPG', ''], ['/img/BNL_0109.JPG', ''], ['/img/BNL_0123.JPG', ''], ['/img/BNL_0129.JPG', ''], ['/img/BNL_0160.JPG', '']]],
     // siam reap to chang mai
     [1, 5, [104.8230, 13.3044], [100.6920, 17.2881], null, "Our last stop in SE Asia was Thailand",
-    [['/img/BNL_0206.JPG', ''], ['/img/BNL_0230.JPG', ''], ['/img/DSC_0950.JPG', ''], ['/img/DSC_0953.JPG', ''], ['/img/DSC_0980.JPG', ''], ['/img/DSC_0982.JPG', ''],
+    ['/img/DSC_0436.JPG', '/img/DSC_0440.JPG', '/img/DSC_0509.JPG', '/img/DSC_0514.JPG',
+    ['/img/BNL_0206.JPG', ''], ['/img/BNL_0230.JPG', ''], ['/img/DSC_0950.JPG', ''], ['/img/DSC_0953.JPG', ''], ['/img/DSC_0980.JPG', ''], ['/img/DSC_0982.JPG', ''],
     ['/img/DSC_0985.JPG', ''], ['/img/DSC_1029.JPG', ''], ['/img/DSC_1030.JPG', ''], ['/img/DSC_1056.JPG', ''], ['/img/DSC_1076.JPG', ''], ['/img/DSC_1258.JPG', ''],
     ['/img/DSC_1376.JPG', ''], ['/img/DSC_1389.JPG', ''], ['/img/DSC_1446.JPG', ''], ['/img/DSC_1502.JPG', ''], ['/img/DSC_1594.JPG', '']]],
     // chang mai to bangkok
     [5, 10, [100.6920, 17.2881], [101.2084, 13.3044], null, "Our last stop in SE Asia was Thailand",
-    [['/img/BNL_0248.JPG', ''], ['/img/BNL_0275.JPG', ''], ['/img/BNL_0292.JPG', 'Sneaky photo of the Jade Buddah'], ['/img/BNL_0303.JPG', '']]],
+    ['/img/DSC_0916.JPG', '/img/DSC_0917.JPG', ['/img/BNL_0248.JPG', ''], ['/img/BNL_0275.JPG', ''], ['/img/BNL_0292.JPG', 'Sneaky photo of the Jade Buddah'], ['/img/BNL_0303.JPG', '']]],
     // bangkok to san francisco 
     [10, 14, [101.2084, 13.3044], [-122.2364, 37.4852], null, "", []],
     // lake tahoe
@@ -58,29 +59,29 @@ var yearEvents = [
     ['/img/IMG_5261.jpg', ''], ['/img/IMG_6544.JPG', ''], ['/img/IMG_6548.JPG', ''], ['/img/IMG_6562.JPG', ''], ['/img/IMG_6563.JPG', '']]],
     [142, 144, [-122.4286, 37.4636], [-122.2364, 37.4852], "#e23434", "", []],
     // portland
-    [144, 152, [-122.2364, 37.4852], [-122.6765, 45.5231], "#e23434", "Lauren's bachelorette party was in Portland, OR!",
+    [144, 149, [-122.2364, 37.4852], [-122.6765, 45.5231], "#e23434", "Lauren's bachelorette party was in Portland, OR!",
     ['/img/IMG_6632.JPG', '/img/IMG_6640.JPG', '/img/IMG_6644.JPG', '/img/IMG_6654.JPG', '/img/IMG_6655.JPG', '/img/IMG_6657.JPG', '/img/IMG_6660.jpg',
     '/img/IMG_6668.JPG', '/img/IMG_6675.JPG', '/img/IMG_6680.JPG', '/img/IMG_6702.JPG', '/img/IMG_6708.JPG', '/img/IMG_6710.JPG', '/img/IMG_6746.JPG',
     '/img/IMG_6749.JPG', '/img/IMG_6750.JPG', '/img/IMG_6772.JPG', '/img/IMG_6775.JPG', '/img/IMG_6776.JPG', '/img/IMG_6777.JPG', '/img/IMG_6779.JPG',
     '/img/IMG_6780.JPG', '/img/IMG_6794.JPG', '/img/IMG_6817.JPG', '/img/IMG_6825.JPG']],
-    [152, 154, [-122.6765, 45.5231], [-122.2364, 37.4852], "#e23434", "Lauren's bachelorette party was in Portland, OR!", []],
+    [149, 154, [-122.6765, 45.5231], [-122.2364, 37.4852], "#e23434", "Lauren's bachelorette party was in Portland, OR!", []],
     // austin
-    [154, 162, [-122.2364, 37.4852], [-97.7431, 30.2672], "#0e3374", "Brendan went down to Austin, TX for his bachelor party", []],
-    [162, 164, [-97.7431, 30.2672], [-122.2364, 37.4852], "#0e3374", "Brendan went down to Austin, TX for his bachelor party", []],
+    [154, 159, [-122.2364, 37.4852], [-97.7431, 30.2672], "#0e3374", "Brendan went down to Austin, TX for his bachelor party", []],
+    [159, 164, [-97.7431, 30.2672], [-122.2364, 37.4852], "#0e3374", "Brendan went down to Austin, TX for his bachelor party", []],
     // Brendan in Japan
-    [170, 175, [-122.2364, 37.4852], [135.5022, 34.6937], "#0e3374", "Brendan went to Japan for a business trip.", []],
-    [175, 177, [135.5022, 34.6937], [139.6917, 35.6895], "#0e3374", "Bullet train to Tokyo!", []],
+    [170, 174, [-122.2364, 37.4852], [135.5022, 34.6937], "#0e3374", "Brendan went to Japan for a business trip.", []],
+    [174, 177, [135.5022, 34.6937], [139.6917, 35.6895], "#0e3374", "Bullet train to Tokyo!", []],
     [177, 180, [139.6917, 35.6895], [135.5022, 34.6937], "#0e3374", "Bullet train to Tokyo!", []],
-    [180, 183, [135.5022, 34.6937], [-122.2364, 37.4852], "#0e3374", "", []],
+    [180, 184, [135.5022, 34.6937], [-122.2364, 37.4852], "#0e3374", "", []],
     // LM Wedding in Ohio
-    [185, 188, [-122.2364, 37.4852], [-81.6944, 41.4993], null, "Going to Ohio for Laura's wedding",
+    [185, 187, [-122.2364, 37.4852], [-81.6944, 41.4993], null, "Going to Ohio for Laura's wedding",
     ['/img/IMG_7034.JPG', '/img/IMG_7007.JPG', '/img/IMG_6989.JPG', '/img/MM_001.JPG', '/img/IMG_7018.JPG',
     '/img/IMG_7026.JPG', '/img/MM_002.JPG', ]],
     [188, 190, [-81.6944, 41.4993], [-122.2364, 37.4852], null, "Going to Ohio for Laura's wedding", []],
     // sonoma... wedding!
-    [195, 202, [-122.2364, 37.4852], [-122.4580, 38.2919], null, "Headed to Sonoma for our big day!",
+    [195, 196, [-122.2364, 37.4852], [-122.4580, 38.2919], null, "Headed to Sonoma for our big day!",
     ['/img/11.JPG', '/img/13.JPG', '/img/19.JPG', '/img/2.JPG', '/img/22.JPG', '/img/27.JPG', '/img/32.JPG', '/img/35.JPG', '/img/39.JPG', '/img/4.JPG', '/img/40.JPG', '/img/41.JPG', '/img/55.JPG', '/img/7.JPG', '/img/8.JPG', '/img/0002.jpg', '/img/0004.jpg', '/img/0005.jpg', '/img/0006.jpg', '/img/0022.jpg', '/img/0029.jpg', '/img/0030.jpg', '/img/0031.jpg', '/img/0032.jpg', '/img/0033.jpg', '/img/0034.jpg', '/img/0035.jpg', '/img/0040.jpg', '/img/0060.jpg', '/img/0067.jpg', '/img/0070.jpg', '/img/0077.jpg', '/img/0084.jpg', '/img/0085.jpg', '/img/0087.jpg', '/img/0096.jpg', '/img/0098.jpg', '/img/0101.jpg', '/img/0105.jpg', '/img/0114.jpg', '/img/0149.jpg', '/img/0150.jpg', '/img/0155.jpg', '/img/0156rev.jpg', '/img/0158rev.jpg', '/img/0162.jpg', '/img/0166.jpg', '/img/0170.jpg', '/img/0175.jpg', '/img/0178.jpg', '/img/0181.jpg', '/img/0184.jpg', '/img/0188.jpg', '/img/0189.jpg', '/img/0196.jpg', '/img/0198.jpg', '/img/0201.jpg', '/img/0203.jpg', '/img/0206.jpg', '/img/0219.jpg', '/img/0222.jpg', '/img/0224.jpg', '/img/0225.jpg', '/img/0230.jpg', '/img/0240.jpg', '/img/0243.jpg', '/img/0248.jpg', '/img/0249.jpg', '/img/0252.jpg', '/img/0257.jpg', '/img/0266.jpg', '/img/0268.jpg', '/img/0272.jpg', '/img/0273.jpg', '/img/0277.jpg', '/img/0280.jpg', '/img/0282.jpg', '/img/0286.jpg', '/img/0295.jpg', '/img/0334.jpg', '/img/0339.jpg', '/img/0348.jpg', '/img/0360.jpg', '/img/0379.jpg', '/img/0396.jpg', '/img/0408.jpg', '/img/0426.jpg', '/img/0438.jpg', '/img/0456.jpg', '/img/0457.jpg', '/img/0475.jpg', '/img/0482.jpg', '/img/0484.jpg', '/img/0491.jpg', '/img/0492.jpg', '/img/0493.jpg', '/img/0495.jpg', '/img/0497.jpg', '/img/0503.jpg', '/img/0508.jpg', '/img/0511.jpg', '/img/0513.jpg', '/img/0517.jpg', '/img/0518.jpg', '/img/0519.jpg', '/img/0521.jpg', '/img/0523.jpg', '/img/0528.jpg', '/img/0529.jpg', '/img/0532.jpg', '/img/0582.jpg', '/img/0624.jpg', '/img/0631.jpg', '/img/0644.jpg', '/img/0659.jpg', '/img/0664.jpg', '/img/0668.jpg', '/img/0677.jpg', '/img/0681.jpg', '/img/0686.jpg', '/img/0688.jpg', '/img/0693.jpg', '/img/0694.jpg', '/img/0695.jpg', '/img/0697.jpg', '/img/0702.jpg', '/img/0704.jpg', '/img/0709.jpg', '/img/0714.jpg', '/img/0721.jpg', '/img/0722.jpg', '/img/0726.jpg', '/img/0728.jpg', '/img/0731rev.jpg', '/img/0734.jpg', '/img/0735.jpg', '/img/0743.jpg', '/img/0754.jpg', '/img/0763.jpg', '/img/0765.jpg', '/img/0766.jpg', '/img/0769.jpg', '/img/0772.jpg', '/img/0773.jpg', '/img/0774.jpg', '/img/0776.jpg', '/img/0777.jpg', '/img/0780.jpg', '/img/0781.jpg', '/img/0783.jpg', '/img/0785.jpg', '/img/0786.jpg', '/img/0788.jpg', '/img/0790rev.jpg', '/img/0794.jpg', '/img/0798.jpg', '/img/0800.jpg', '/img/0803.jpg', '/img/0814.jpg', '/img/0847.jpg', '/img/0851.jpg', '/img/0855.jpg']],
-    [202, 203, [-122.4580, 38.2919], [-122.2364, 37.4852], null, "Headed to Sonoma for our big day!", []],
+    [196, 203, [-122.4580, 38.2919], [-122.2364, 37.4852], null, "Headed to Sonoma for our big day!", []],
     // Ireland
     [203, 205, [-122.2364, 37.4852], [-6.2603, 53.3498], null, "Off for our Honeymoon... First stop is Ireland 🇮🇪",
     ['/img/img_20170723_154842.jpg', '/img/img_20170724_145351.jpg', '/img/img_20170724_160541.jpg', '/img/img_20170724_172550_01.jpg']],
